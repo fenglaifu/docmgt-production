@@ -1,0 +1,12 @@
+﻿1、解压mysql-8.0.14-winx64.zip
+2、在解压目录mysql-8.0.14-winx64下添加文件：my.ini
+3、在解压目录的bin目录下执行命令：mysqld --initialize --console 
+4、系统生成的初始密码 root@localhost: rURJ+4D5t>sk
+5、在解压目录的bin目录下执行命令：mysqld --install
+6、启动服务：net start mysql
+7、登录mysql命令：mysql -u root -p
+8、输入密码：rURJ+4D5t>sk
+9、修改root登录密码为：root1234
+	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'root1234';
+10、exit重新登录	
+11、执行sql脚本命令：source D:/doc/doc.sql
