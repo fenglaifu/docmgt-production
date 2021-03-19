@@ -1,5 +1,6 @@
 create database docmanagement;
 set character_set_server=utf8;
+use docmanagement;
 
 CREATE TABLE IF NOT EXISTS doc_file_t(
 	id INT(11) NOT NULL AUTO_INCREMENT,
