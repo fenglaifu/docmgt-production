@@ -9,7 +9,7 @@ module.exports = {
     outputDir: 'dist',
     devServer: {
         host: 'localhost',
-        port: 3001,
+        port: 3000,
         https: false,
         hotOnly: false,
         proxy: { // 设置代理
