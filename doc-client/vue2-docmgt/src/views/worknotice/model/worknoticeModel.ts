@@ -65,5 +65,22 @@ export function WorkNoticeModelData() {
                         });
     }
 
-    return { state, getDataList, saveNotice, getDetail }
+    const deleteData = (id:number) => {
+        state.loading = true;
+        let url = `/workNotice/${id}`;
+        return service.deleteData(url)
+                        .then((data:any) => {
+                            getDataList();
+                            return data;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            service.showErrorMsg(undefined);
+                        })
+                        .finally(() => {
+                            state.loading = false;
+                        });
+    }
+
+    return { state, getDataList, saveNotice, getDetail, deleteData }
 }

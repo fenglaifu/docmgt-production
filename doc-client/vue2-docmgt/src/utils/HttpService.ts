@@ -59,6 +59,18 @@ export class HttpService {
         });
     }
 
+    public deleteData(url: String) {
+        
+        return new Promise((resolve, reject) => {
+            this.axios.delete(url).then((res:any) => {
+                this.resultHandle(res, resolve);
+            }).catch((err:any) => {
+                reject(err.message);
+            });
+        });
+    }
+
+
     public getArrayBufferData(url: String, responseType?: string) {
         return new Promise((resolve, reject) => {
             this.axios.get(url,{

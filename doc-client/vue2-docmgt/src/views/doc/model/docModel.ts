@@ -70,8 +70,20 @@ export function DocModelData() {
         });
     }
 
+    const deleteFile =(id: number) => {
+        let url = `/docFile/${id}`;
+        state.loading = true;
+        return service.deleteData(url)
+        .then(result => {
+            return result;
+        })
+        .finally(() => {
+            state.loading = false;
+        });
+    }
+
     const services = axios.create({
-        baseURL: "http://localhost:5000/api",
+        baseURL: baseURL,
         timeout: 360000
       });
       
@@ -183,5 +195,5 @@ export function DocModelData() {
     }
 
     
-    return {state, baseURL, getAllDataList, getAllDirTree, getFileInfo, previewFile, previewPdfFile, previewXlsxFile, previewDocxFile, uploadSingle, downloadFile}
+    return {state, baseURL, getAllDataList, getAllDirTree, getFileInfo, deleteFile, previewFile, previewPdfFile, previewXlsxFile, previewDocxFile, uploadSingle, downloadFile}
 }

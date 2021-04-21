@@ -26,6 +26,7 @@
         <el-table-column label="操作" align="center">
           <template v-slot="scope">
             <el-button type="primary" @click="handleView(scope)" >内容详情</el-button>
+            <el-button type="primary" @click="deleteRow(scope)" >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -43,7 +44,7 @@
 <script lang="ts">
 import Pagination from '../../../src/components/Pagination.vue';
 import { WorkNoticeModelData } from './model/worknoticeModel';
-const {state, getDataList} = WorkNoticeModelData();
+const {state, getDataList, deleteData } = WorkNoticeModelData();
 
 export default {
   name: "Worknoticelist",
@@ -78,6 +79,9 @@ export default {
             name: "worknoticedetail",
             params: { id: row.id },
       });
+    },
+    deleteRow({row}) {
+      deleteData(row.id);
     }
   },
 };

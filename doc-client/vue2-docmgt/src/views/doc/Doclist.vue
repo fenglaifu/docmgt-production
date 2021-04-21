@@ -10,9 +10,14 @@
       :props="state.defaultProps"
       :data="dataTreeList"
       ref="tree"
-      node-key="id"
-      @node-click="handleNodeClick"
-      >
+      node-key="id">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span @click="() => handleNodeClick(data, node)">{{ node.label }}</span>
+
+        <span v-if="data.isDir < 1">
+          <el-button type="text" size="mini" @click="() => remove(node, data)">删除</el-button>
+        </span>
+      </span>
     </el-tree> 
     </div>
 </template>
@@ -20,7 +25,7 @@
 <script lang="ts">
 import { DocModelData } from './model/docModel';
 import { Message } from 'element-ui';
-const {state, getAllDataList} = DocModelData();
+const {state, getAllDataList, deleteFile} = DocModelData();
 
 export default {
   name: "Doclist",
@@ -78,6 +83,32 @@ export default {
           }
         }
     },
+    remove(node:any, data:any) {
+      this.$confirm('是否删除该文件?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteFile(data.id).then(result => {
+            const parent = node.parent;
+            const children = parent.data.children || parent.data;
+            const index = children.findIndex((d:any) => d.id === data.id);
+            console.log(data);
+            children.splice(index, 1);
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          });
+          
+        }).catch(() => {
+          /* this.$message({
+            type: 'info',
+            message: '已取消删除'
+          }); */          
+        });
+      
+    },
   },
 
 };
@@ -86,5 +117,13 @@ export default {
 <style scoped>
   .btn-container {
     text-align: left;
-}
+  }
+  .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
+  }
 </style>
