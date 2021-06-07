@@ -21,6 +21,25 @@ CREATE TABLE IF NOT EXISTS work_notice_t(
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+delimiter %%% 
+create function getChildList(rootId int)
+returns varchar(1000) READS SQL DATA
+
+BEGIN
+  declare sTemp varchar(1000);
+  declare sTempChd varchar(1000);
+  SET sTemp = '$';
+  SET sTempChd =cast(rootId as CHAR);
+
+  WHILE sTempChd is not null DO
+    SET sTemp = concat(sTemp,',',sTempChd);    
+    SELECT group_concat(id) INTO sTempChd FROM doc_file_t where FIND_IN_SET(parent_id,sTempChd)>0;
+  END WHILE;
+  RETURN sTemp;
+END %%%
+delimiter ;
+
+
 insert into doc_file_t(
 	parent_id,
 	file_name,
